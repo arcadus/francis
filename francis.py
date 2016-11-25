@@ -1,7 +1,14 @@
 import discord
 import asyncio
+import json
 
 client = discord.Client()
+
+class SecretHitler:
+    '''An instance of a Secret Hitler game.'''
+    def __init__(self):
+        self.players = 0
+        self.deck = None # some kind of representation of the policy deck, 11 fascist, 6 liberal
 
 @client.event
 @asyncio.coroutine
@@ -14,10 +21,16 @@ def on_ready():
 @client.event
 @asyncio.coroutine
 def on_message(message):
-    if message.content.startswith('!sleep'):
-        yield from asyncio.sleep(5)
-        yield from client.send_message(message.channel, 'Done sleeping')
-    elif message.content.startswith('!test'):
-        yield from client.send_message(message.channel, 'hi')
+    if message.content.startswith('.help'):
+        yield from client.send_message(message.author,
+                                       '''Francis commands:
+    `.help` : sends this help message in a pm
+    `.secrethitler` : starts a game of Secret Hitler
+    `.join` : join Secret Hitler
+    ''')
+    elif message.content.startswith('.secrethitler'):
+        yield from client.send_message(message.channel, 'Secret Hitler game is starting, type `.join` to join!')
+    elif message.content.startswith('.join'):
+        yield from client.send_message(message.channel, '{} joined Secret Hitler.'.format(message.author))
 
 client.run('token')
