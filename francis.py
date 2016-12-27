@@ -1,6 +1,8 @@
 import discord
 import asyncio
 
+API_TOKEN = ''
+
 client = discord.Client()
 
 @client.event
@@ -20,4 +22,4 @@ def on_message(message):
     elif message.content.startswith('!test'):
         yield from client.send_message(message.channel, 'hi')
 
-client.run('token')
+client.run(API_TOKEN)
